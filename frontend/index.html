@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>CSP</title>
+</head>
+<style>
+    html, body {
+        width: 100%;
+        height: 100%;
+        margin: 0;
+        padding: 0;
+        display: block;
+    }
+    input {
+        border-radius: 0.3rem;
+    }
+
+    input, button {
+        display: block;
+        margin: 0.3rem auto;
+    }
+    div{
+        position: absolute;
+        top:50%;
+        left:50%;
+        transform: translate(-50%,-50%);
+    }
+</style>
+<body>
+<div>
+    <input type="text" placeholder="User Name" id="user"/>
+    <input type="password" placeholder="Old Password" id="old"/>
+    <input type="password" placeholder="New Password" id="new"/>
+    <input type="password" placeholder="Repeat password" id="new_check"/>
+    <button id="submit">Apply</button>
+</div>
+<script>
+    document.getElementById("submit").onclick = function (o) {
+        const user = document.getElementById("user").value;
+        const old = document.getElementById("old").value;
+        const newPwd = document.getElementById("new").value;
+        const newPwd_check = document.getElementById("new_check").value;
+        if (user.length <= 0 || old.length <= 0 || newPwd.length <= 0 || newPwd_check.length <= 0) {
+            alert("请填写完整!");
+            return false;
+        }
+        const xhr = new XMLHttpRequest();
+        xhr.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+        xhr.open('post', '02.post.php');
+        xhr.send('name=fox&age=18');
+        xhr.onreadystatechange = function () {
+            if (xhr.readyState == 4 && xhr.status == 200) {
+                console.log(xhr.responseText);
+            }
+        };
+    }
+</script>
+</body>
+</html>
