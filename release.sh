@@ -54,7 +54,7 @@ release () {
   echo "📦 Done! $semver released."
 }
 
-while getopts "bacr:d" o; do
+while getopts "br:d" o; do
   case "${o}" in
     r)
       RELEASE=${OPTARG}
