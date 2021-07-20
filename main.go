@@ -7,12 +7,13 @@ import (
 	"github.com/gin-gonic/gin"
 	"html/template"
 	"io/ioutil"
+	"log"
 	"net/http"
 	"strings"
 )
 
 func main() {
-	//gin.SetMode(gin.ReleaseMode)
+	gin.SetMode(gin.ReleaseMode)
 	args := flag.String("port", "1516", "Set the args.")
 	flag.Parse()
 	r := gin.New()
@@ -36,7 +37,10 @@ func main() {
 			"status": status,
 		})
 	})
-	r.Run(fmt.Sprintf(":%s", *args))
+	err = r.Run(fmt.Sprintf(":%s", *args))
+	if err != nil {
+		log.Println(err.Error())
+	}
 }
 func loadStatic() (*template.Template, error) {
 	t := template.New("")
