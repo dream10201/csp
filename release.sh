@@ -29,7 +29,7 @@ checkParam () {
     exit 1
   fi
 }
-back () {
+rollback () {
   cd $REPO
   checkParam $1
   git tag -d "$1"
@@ -73,5 +73,5 @@ if [ "$RELEASE" != "" ]; then
 fi
 
 if [ "$PRELEASE" != "" ]; then
-  back $PRELEASE
+  rollback $PRELEASE
 fi
