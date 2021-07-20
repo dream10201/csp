@@ -29,6 +29,11 @@ checkParam () {
     exit 1
   fi
 }
+back () {
+  cd $REPO
+  git tag -d "$1"
+  git push origin :refs/tags/"$1"
+}
 release () {
 #  git tag -d "$1"
 #  git push origin :refs/tags/"$1"
@@ -52,6 +57,9 @@ while getopts "bacr:d" o; do
   case "${o}" in
     r)
       RELEASE=${OPTARG}
+      ;;
+    b)
+      back ${OPTARG}
       ;;
     *)
       usage
