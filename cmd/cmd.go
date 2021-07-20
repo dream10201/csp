@@ -2,8 +2,8 @@ package cmd
 
 import (
 	"bytes"
-	"fmt"
 	"github.com/hirochachacha/go-smb2"
+	"log"
 	"net"
 	"os/exec"
 	"strings"
@@ -22,9 +22,18 @@ func Check(user string) bool {
 	var buffer bytes.Buffer
 	ec := exec.Command("sh", "-c", listAll)
 	ec.Stdout = &buffer
-	ec.Run()
-	if strings.Index(buffer.String(), fmt.Sprintf("%s:", user)) != -1 {
-		return true
+	err := ec.Run()
+	if err != nil {
+		log.Println(err.Error())
+	}
+	lines := strings.Split(buffer.String(), "\n")
+	for i := range lines {
+		if len(lines[i]) > 0 {
+			temp := strings.Split(lines[i], ":")
+			if user == temp[0] {
+				return true
+			}
+		}
 	}
 	return false
 }
@@ -37,7 +46,10 @@ func ChangePassword(user, pwd string) bool {
 	var buffer bytes.Buffer
 	ec := exec.Command("sh", "-c", "printf \"%s\\n%s\\n\" "+pwd+" "+pwd+" | smbpasswd -s "+user)
 	ec.Stdout = &buffer
-	ec.Run()
+	err := ec.Run()
+	if err != nil {
+		log.Println(err.Error())
+	}
 	if len(buffer.String()) <= 0 {
 		return true
 	}
