@@ -1,5 +1,6 @@
 # csp
-web修改samba密码
+Change samba password by web.
+
 ![image](screenshots/demo.png)
 
 ## run
