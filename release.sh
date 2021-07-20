@@ -31,6 +31,7 @@ checkParam () {
 }
 back () {
   cd $REPO
+  checkParam $1
   git tag -d "$1"
   git push origin :refs/tags/"$1"
 }
@@ -59,7 +60,7 @@ while getopts "bacr:d" o; do
       RELEASE=${OPTARG}
       ;;
     b)
-      back ${OPTARG}
+      PRELEASE=${OPTARG}
       ;;
     *)
       usage
@@ -69,4 +70,8 @@ done
 shift $((OPTIND-1))
 if [ "$RELEASE" != "" ]; then
   release $RELEASE
+fi
+
+if [ "$PRELEASE" != "" ]; then
+  back $PRELEASE
 fi
