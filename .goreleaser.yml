@@ -5,6 +5,7 @@ before:
     - go get github.com/gin-gonic/gin
     - go get github.com/jessevdk/go-assets-builder
     - go get github.com/hirochachacha/go-smb2
+    - go get github.com/jessevdk/go-assets
     - go mod tidy
     - go-assets-builder frontend -o assets.go
     - go generate ./...
