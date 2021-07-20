@@ -6,5 +6,7 @@ Change samba password by web.
 ## run
 ```shell
 # default port 1516
-./csp or ./csp --port 8080
+./csp
+# Custom port
+./csp --port 8080
 ```
