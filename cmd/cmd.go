@@ -66,5 +66,5 @@ func CheckOldPassword(user, oldPwd string) bool {
 		return false
 	}
 	defer s.Logoff()
-	return false
+	return true
 }

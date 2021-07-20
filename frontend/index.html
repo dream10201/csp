@@ -12,6 +12,7 @@
         padding: 0;
         display: block;
     }
+
     input {
         border-radius: 0.3rem;
     }
@@ -20,11 +21,12 @@
         display: block;
         margin: 0.3rem auto;
     }
-    div{
+
+    div {
         position: absolute;
-        top:50%;
-        left:50%;
-        transform: translate(-50%,-50%);
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
     }
 </style>
 <body>
@@ -36,22 +38,34 @@
     <button id="submit">Apply</button>
 </div>
 <script>
+    const xhr = new XMLHttpRequest();
     document.getElementById("submit").onclick = function (o) {
+        document.getElementById("submit").disabled = "disabled";
         const user = document.getElementById("user").value;
         const old = document.getElementById("old").value;
         const newPwd = document.getElementById("new").value;
         const newPwd_check = document.getElementById("new_check").value;
-        if (user.length <= 0 || old.length <= 0 || newPwd.length <= 0 || newPwd_check.length <= 0) {
-            alert("请填写完整!");
+        if (user.length <= 0 || old.length <= 0 || newPwd.length <= 0 || newPwd_check.length <= 0 || newPwd !== newPwd_check) {
+            alert("Please check your input!");
+            document.getElementById("submit").disabled = "";
             return false;
         }
-        const xhr = new XMLHttpRequest();
+        xhr.open("POST", "/apply", true);
         xhr.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
-        xhr.open('post', '02.post.php');
-        xhr.send('name=fox&age=18');
+        xhr.send("user=" + user + "&pwd=" + old + "&newPwd=" + newPwd);
         xhr.onreadystatechange = function () {
-            if (xhr.readyState == 4 && xhr.status == 200) {
-                console.log(xhr.responseText);
+            if (xhr.readyState == 4) {
+                if (xhr.status == 200) {
+                    const result = JSON.parse(xhr.responseText);
+                    if (!result["status"]) {
+                        alert("User does not exist or password is wrong!");
+                    } else {
+                        alert("Successfully.");
+                    }
+                } else {
+                    alert("Network Error(" + xhr.status + ").");
+                }
+                document.getElementById("submit").disabled = "";
             }
         };
     }
