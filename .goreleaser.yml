@@ -6,7 +6,7 @@ before:
     - go get github.com/jessevdk/go-assets-builder
     - go get github.com/hirochachacha/go-smb2
     - go mod tidy
-    - go-assets-builder.exe frontend /o assets.go
+    - go-assets-builder frontend /o assets.go
     - go generate ./...
 builds:
   - env:
