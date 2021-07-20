@@ -7,7 +7,7 @@ set -e
 
 REPO=$(cd $(dirname $0); pwd)
 RELEASE=""
-DELETE=""
+PRELEASE=""
 
 checkParam () {
   echo "👀 Checking semver format"
