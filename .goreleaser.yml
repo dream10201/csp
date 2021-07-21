@@ -9,10 +9,10 @@ before:
     - go get github.com/hirochachacha/go-smb2
     - go-bindata -pkg route -o ./route/bindata.go frontend/...
     - go generate ./...
-    - export GIN_MODE=release
 builds:
   - env:
       - CGO_ENABLED=0
+      - GIN_MODE=release
     goos:
       - linux
 #      - windows
