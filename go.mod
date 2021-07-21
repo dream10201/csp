@@ -3,7 +3,9 @@ module github.com/csp/v2
 go 1.16
 
 require (
+	github.com/elazarl/go-bindata-assetfs v1.0.1 // indirect
 	github.com/gin-gonic/gin v1.7.2
+	github.com/go-bindata/go-bindata v3.1.2+incompatible // indirect
 	github.com/go-playground/validator/v10 v10.7.0 // indirect
 	github.com/golang/protobuf v1.5.2 // indirect
 	github.com/google/go-cmp v0.5.6 // indirect

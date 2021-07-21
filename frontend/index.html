@@ -3,81 +3,9 @@
 <head>
     <meta charset="UTF-8">
     <title>CSP</title>
+    <link rel="stylesheet" href="/static/index.css">
+    <link rel="stylesheet" href="/static/sweetalert2.min.css">
 </head>
-<style>
-    html, body {
-        width: 100%;
-        height: 100%;
-        margin: 0;
-        padding: 0;
-        display: block;
-    }
-
-    html {
-        background-image: linear-gradient(to top, #30cfd0 0%, #330867 100%);
-    }
-
-    button {
-        display: block;
-        margin: 0.6rem auto;
-        color: #6C7088;
-        transform-origin: 0 0;
-        transition: all .25s;
-        width: 6.7rem;
-        height: 2.7rem;
-    }
-
-    #box {
-        width: 100%;
-        position: absolute;
-        top: 50%;
-        left: 50%;
-        transform: translate(-50%, -50%);
-    }
-
-    .input-fill {
-        width: calc(100% - 34px);
-        margin: 0;
-        font-size: 16px;
-        line-height: 1.5;
-        outline: none;
-        padding: 20px 16px 6px;
-        border: 1px solid transparent;
-        background: #f5f5fa;
-        border-radius: 10px;
-        transition: border-color .25s;
-    }
-
-    .input-fill:placeholder-shown::placeholder {
-        color: transparent;
-    }
-
-    .input-fill-box {
-        width: 20rem;;
-        position: relative;
-        margin: 0.3rem auto;
-    }
-
-    .input-label {
-        position: absolute;
-        left: 16px;
-        top: 14px;
-        pointer-events: none;
-        color: #BEC1D9;
-        padding: 0 2px;
-        transform-origin: 0 0;
-        transition: all .25s;
-    }
-
-    .input-fill:not(:placeholder-shown) ~ .input-label,
-    .input-fill:focus ~ .input-label {
-        transform: scale(0.75) translate(0px, -14px);
-    }
-
-    .input-fill:focus {
-        border: 2px solid #1d31aa;
-    }
-</style>
 <body>
 <div id="box">
     <div class="input-fill-box">
@@ -99,38 +27,7 @@
     </div>
     <button type="submit" id="submit">Apply</button>
 </div>
-<script>
-    const xhr = new XMLHttpRequest();
-    document.getElementById("submit").onclick = function () {
-        document.getElementById("submit").disabled = "disabled";
-        const user = document.getElementById("user").value;
-        const old = document.getElementById("old").value;
-        const newPwd = document.getElementById("new").value;
-        const newPwd_check = document.getElementById("new_check").value;
-        if (user.length <= 0 || old.length <= 0 || newPwd.length <= 0 || newPwd_check.length <= 0 || newPwd !== newPwd_check) {
-            alert("Please check your input!");
-            document.getElementById("submit").disabled = "";
-            return false;
-        }
-        xhr.open("POST", "/apply", true);
-        xhr.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
-        xhr.send("user=" + user + "&pwd=" + old + "&newPwd=" + newPwd);
-        xhr.onreadystatechange = function () {
-            if (xhr.readyState === 4) {
-                if (xhr.status === 200) {
-                    const result = JSON.parse(xhr.responseText);
-                    if (!result["status"]) {
-                        alert("User does not exist or password is wrong!");
-                    } else {
-                        alert("Successfully.");
-                    }
-                } else {
-                    alert("Network Error(" + xhr.status + ").");
-                }
-                document.getElementById("submit").disabled = "";
-            }
-        };
-    }
-</script>
+<script src="/static/sweetalert2.min.js"></script>
+<script src="/static/index.js"></script>
 </body>
 </html>

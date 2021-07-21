@@ -4,11 +4,12 @@ before:
   hooks:
     - go mod tidy
     - go get github.com/gin-gonic/gin
-    - go get github.com/jessevdk/go-assets-builder
+    - go get github.com/go-bindata/go-bindata/...
+    - go get github.com/elazarl/go-bindata-assetfs/...
     - go get github.com/hirochachacha/go-smb2
-    - go get github.com/jessevdk/go-assets
-    - go-assets-builder frontend -o assets.go
+    - go-bindata -pkg route -o ./route/bindata.go frontend/...
     - go generate ./...
+    - export GIN_MODE=release
 builds:
   - env:
       - CGO_ENABLED=0
