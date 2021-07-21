@@ -1,13 +1,10 @@
 #!/usr/bin/env sh
 set -e
 
-
-#  git tag -d "$1"
-#  git push origin :refs/tags/"$1"
-
 REPO=$(cd $(dirname $0); pwd)
 RELEASE=""
 PRELEASE=""
+LASTTAG=`git describe --match "v[0-9]\.[0-9]\.[0-9]" --abbrev=0 --tags $(git rev-list --tags --max-count=1)`
 
 checkParam () {
   echo "👀 Checking semver format"
@@ -31,16 +28,18 @@ checkParam () {
 }
 rollback () {
   cd $REPO
-  checkParam $1
-  git tag -d "$1"
-  git push origin :refs/tags/"$1"
+  checkParam $LASTTAG
+  git tag -d "$LASTTAG"
+  git push origin :refs/tags/"$LASTTAG"
 }
 release () {
-#  git tag -d "$1"
-#  git push origin :refs/tags/"$1"
   cd $REPO
-
+  
   checkParam $1
+  
+  if [ "$LASTTAG" = "$1" ]; then
+    rollback
+  fi
 
 #  echo "🧼  Tidying up go modules"
 #  go mod tidy
@@ -60,7 +59,7 @@ while getopts "br:d" o; do
       RELEASE=${OPTARG}
       ;;
     b)
-      PRELEASE=${OPTARG}
+      PRELEASE="true"
       ;;
     *)
       usage
@@ -72,6 +71,6 @@ if [ "$RELEASE" != "" ]; then
   release $RELEASE
 fi
 
-if [ "$PRELEASE" != "" ]; then
-  rollback $PRELEASE
+if [ "$PRELEASE" = "true" ]; then
+  rollback
 fi
