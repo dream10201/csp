@@ -2,11 +2,13 @@
 # Make sure to check the documentation at http://goreleaser.com
 before:
   hooks:
-    - go mod tidy
+    - sudo apt-get install minify -y
+    - minify -o frontend/ -r frontend/
     - go mod download
     - go get github.com/go-bindata/go-bindata/...
     - go get github.com/elazarl/go-bindata-assetfs/...
     - go-bindata -pkg route -o ./route/bindata.go frontend/...
+    - go mod tidy
     - go generate ./...
 builds:
   - env:
