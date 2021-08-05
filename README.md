@@ -1,5 +1,5 @@
 # csp
-Change samba password by web.
+Change samba users' password using a web interface.
 
 ![image](screenshots/demo.png)
 
